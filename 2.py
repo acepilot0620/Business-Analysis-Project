@@ -6,10 +6,18 @@ from sklearn.metrics import mean_squared_log_error
 import matplotlib.pyplot as plt
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import MinMaxScaler
-data=pd.read_csv('C:\\Users\\JongHyeon\\OneDrive - 서울과학기술대학교\\3학년 2학기\\BA\\팀플\\data\\final.csv', encoding='utf-8')
-dt=data.drop(['Unnamed: 0', 'hang_dong', 'apt','transaction_id', 'apartment_id', 'city','jibun','addr_kr','transaction_year_month', 'transaction_date'],axis=1)
+from sklearn.linear_model import LinearRegression
+import seaborn as sn
+
+data=pd.read_csv('C:\\Users\\JongHyeon\\OneDrive - 서울과학기술대학교\\3학년 2학기\\BA\\팀플\\data\\final-1.csv', encoding='utf-8')
+
+dt=data.drop(['Unnamed: 0'],axis=1)
+
 head=dt.head(100)
 dt.columns
+dt.info()
+
+
 
 def dummi(dt):
     dum=pd.get_dummies(dt[['dong', 'year_of_completion',
@@ -26,9 +34,13 @@ def dummi(dt):
     return dum
 
 dt_dum=dummi(dt)
+
+
+
 corr=dt_dum.corr()
+sn.heatmap(corr,annot=True)
 
-corr_col=corr.columns
-dum_col=dt_dum.columns
 
-complement = list(set(dum_col) - set(corr_col))
+# lr = LinearRegression()
+# lr.fit(trainX, trainY)
+# lr.predict(testX)
