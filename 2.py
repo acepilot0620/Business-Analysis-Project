@@ -11,7 +11,6 @@ dt=data.drop(['Unnamed: 0', 'hang_dong', 'apt','transaction_id', 'apartment_id',
 head=dt.head(100)
 dt.columns
 
-
 def dummi(dt):
     dum=pd.get_dummies(dt[['dong', 'year_of_completion',
        'floor', 'gu']])
@@ -27,3 +26,9 @@ def dummi(dt):
     return dum
 
 dt_dum=dummi(dt)
+corr=dt_dum.corr()
+
+corr_col=corr.columns
+dum_col=dt_dum.columns
+
+complement = list(set(dum_col) - set(corr_col))
